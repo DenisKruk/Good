@@ -15,18 +15,30 @@ public class Shop<G extends Good>{
 
 
 
-    public void add (G good){
-    goods.add(good);
+    public void add (G ... goodsFromProvider){
+        for (G good : goodsFromProvider) {
+
+            goods.add(good);
+        }
     }
 
-    public void buy( Customer customer,Good good){
-        if(good.price<=customer.money){
-            customer.bag.add(good);
-            goods.remove(good);
-            customer.money-=good.price;
-        }
-else {
-            System.out.println("Not enough money");
+    public void buy( Customer customer,Good good) {
+
+        try {
+            if (goods.contains(good) != true) {
+                throw new IllegalStateException();
+            }
+            if (good.price <= customer.money) {
+                customer.bag.add(good);
+                goods.remove(good);
+                customer.money -= good.price;
+            } else {
+                System.out.println("Not enough money");
+            }
+
+        } catch (IllegalStateException e) {
+            System.out.println("Нет такого товара");
+
         }
     }
 
