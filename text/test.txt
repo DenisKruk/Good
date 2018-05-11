@@ -1,0 +1,2 @@
+Hello my friend! You are learning Java SE!
+Привет!

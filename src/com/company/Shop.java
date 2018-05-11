@@ -8,9 +8,11 @@ import java.util.Objects;
 
 
 public class Shop<G extends Good>{
+    String name;
     List<G> goods;
-    public Shop(List<G> goods){
-    this.goods= new ArrayList<G>();
+    public Shop(String name,List<G> goods){
+        this.name=name;
+        this.goods= new ArrayList<G>();
     }
 
 
@@ -22,29 +24,36 @@ public class Shop<G extends Good>{
         }
     }
 
-    public void buy( Customer customer,Good good) {
-
+    public void buy( Customer customer,Good ... goodsForCustumer) {
+        for (Good good:goodsForCustumer) {
+//           if(goods.contains(good){
+//
+//            }
         try {
-            if (goods.contains(good) != true) {
-                throw new IllegalStateException();
-            }
-            if (good.price <= customer.money) {
-                customer.bag.add(good);
-                goods.remove(good);
-                customer.money -= good.price;
-            } else {
-                System.out.println("Not enough money");
-            }
+            System.out.println( good.getClass());
+            System.out.println( goods.getClass());
+            if(goods.contains(good)) {
 
-        } catch (IllegalStateException e) {
+                if (good.price <= customer.money) {
+                    customer.bag.add(good);
+                    goods.remove(good);
+                    customer.money -= good.price;
+                } else {
+                    System.out.println("Not enough money");
+                }
+            }
+             throw new IllegalStateException();
+
+            } catch(IllegalStateException e) {
             System.out.println("Нет такого товара");
-
         }
+            }
+
     }
 
     @Override
     public String toString() {
-        return "Shop{" +
+        return "Shop "+name+"{" +
                 "goods=" + Arrays.toString(goods.toArray()) +
                 '}';
     }
